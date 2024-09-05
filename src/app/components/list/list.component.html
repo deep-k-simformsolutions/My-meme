@@ -1,6 +1,13 @@
-<div class="container">
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>MY MEME</span>
+        <span class="example-spacer"></span>
 
-</div>
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon" (click)="onClick()">add</mat-icon>
+
+    </mat-toolbar-row>
+    
+</mat-toolbar>
 <mat-card class="meme-card" appearance="outlined" *ngFor="let meme of meme$ | async">
     <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>

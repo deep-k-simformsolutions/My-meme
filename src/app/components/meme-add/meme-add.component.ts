@@ -55,11 +55,11 @@ export class MemeAddComponent implements OnInit {
       formData.append('files.image', this.selectedFile);
     }
     this.dataService.addMeme(formData).subscribe((response) => {
-      console.log('Meme uploaded successfully', response);
-      this.snackBar.open('meme deleted successfully', '', {
+      this.snackBar.open('Meme uploaded successfully', '', {
         duration: 5000,
         panelClass: "msg-danger",
       });
+      this.dialogRef.close(true);
     }, (error) => {
       console.error('Error uploading meme', error);
     })

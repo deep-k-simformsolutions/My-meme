@@ -7,24 +7,30 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
+import { MemeAddComponent } from '../meme-add/meme-add.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [ MatCardModule, HttpClientModule, CommonModule, MatButtonModule, MatSnackBarModule],
+  imports: [ MatCardModule, HttpClientModule, CommonModule, MatButtonModule, MatSnackBarModule,MatToolbarModule, MatIconModule, MatDialogModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
   providers: [DataService]
 })
 export class ListComponent implements OnInit {
   meme$: Observable<Meme[]>
-  constructor(private dataService: DataService,public snackBar: MatSnackBar){
-    this.meme$ = this.dataService.getMemes();
+  constructor(private dataService: DataService,public snackBar: MatSnackBar, public dialog: MatDialog){
   }
   ngOnInit(): void {
-    
+    this.getData();
   }
 
+  getData() {
+    this.meme$ = this.dataService.getMemes();
+  }
   onDelete(id: number){
     this.dataService.deleteMeme(id).subscribe((response) => {
       this.meme$ = this.dataService.getMemes();
@@ -33,6 +39,17 @@ export class ListComponent implements OnInit {
         panelClass: "msg-danger",
       });
     });
+  }
+
+  onClick() {
+    const dailogRef = this.dialog.open(MemeAddComponent, {
+      width: "500px",
+    });
+    dailogRef.afterClosed().subscribe((response)=>{
+      if(response) {
+        this.getData();
+      }
+    })
   }
 
 }

@@ -18,7 +18,7 @@ export class DataService {
           return res.data;
         }),
         map((memes: Meme[]) => {
-          return memes.map((meme) => {
+          return memes.reverse().map((meme) => {
             meme.attributes.image.data.attributes.curl = `http://localhost:1337${meme.attributes.image.data.attributes.url}`;
             console.log(meme.attributes.image.data.attributes.url)
             return meme;
