@@ -1,0 +1,36 @@
+<div class="dialog-content-wrapper confirm-modal-dg">
+    <mat-toolbar class="mat-primary m-0">
+        <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title text-uppercase">Add Meme</span>
+            <span class="example-spacer"></span>
+            <button mat-icon-button class="mr-4" (click)="dialogRef.close(false)" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <div mat-dialog-content class="p-24 m-0">
+        <form [formGroup]="memeForm" (ngSubmit)="onSubmit()" style="position: relative;" fxLayout="column" fxLayoutAlign="space-between center">
+            <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input id="name" formControlName="name" type="text" matInput>
+                <mat-error fxLayout="column" fxLayoutGap="3px" *ngIf="memeForm.get('name')?.invalid && memeForm.get('name')?.touched">
+                    <span *ngIf="memeForm.get('name')?.errors?.required">Please enter name!</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Description</mat-label>
+                <input id="description" formControlName="description" type="text" matInput>
+            </mat-form-field>
+
+            <div class="image-div">
+                <label for="image">Image:</label>
+                <input id="image" type="file" (change)="onFileChange($event)"/>
+            </div>
+          
+            <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="center center">
+                <button mat-raised-button type="submit" color="primary" [disabled]="!memeForm.valid || !selectedFile">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
